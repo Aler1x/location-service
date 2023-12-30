@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "projects": {
+    "osm-integration": {
+      "type": "library",
+      "root": "libs/osm-integration",
+      "entryFile": "index",
+      "sourceRoot": "libs/osm-integration/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/osm-integration/tsconfig.lib.json"
+      }
+    }
+  }
+}
