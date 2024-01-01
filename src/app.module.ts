@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LocationModule } from './location/location.module';
+import { OsmIntegrationModule } from 'y/osm-integration'; // y is a symlink to libs/osm-integration
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { LocationModule } from './location/location.module';
       inject: [ConfigService],
     }),
     LocationModule,
+    OsmIntegrationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
