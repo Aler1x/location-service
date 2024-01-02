@@ -23,9 +23,6 @@ export class LocationService {
 
   async findOne(id: string) {
     const location = await this.locationModel.findById(id);
-    if (!location) {
-      throw new Error(`Location #${id} not found`);
-    }
     return location;
   }
 
@@ -35,13 +32,10 @@ export class LocationService {
       updateLocationDto,
       { new: true },
     );
-    if (!existingLocation) {
-      throw new Error(`Location #${id} not found`);
-    }
     return existingLocation;
   }
 
-  async delete(id: string) {
-    return this.locationModel.findByIdAndDelete(id);
+  async delete(id: string): Promise<void> {
+    this.locationModel.findByIdAndDelete(id);
   }
 }

@@ -110,7 +110,7 @@ describe('LocationService', () => {
     it('should throw an error if location to update not found', async () => {
       (model.findByIdAndUpdate as jest.Mock).mockResolvedValue(null);
 
-      await expect(service.update('1', { id: '1' })).rejects.toThrow(
+      await expect(service.update('1', {})).rejects.toThrow(
         'Location #1 not found',
       );
     });

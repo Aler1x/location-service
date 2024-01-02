@@ -12,6 +12,7 @@ import {
 import { LocationService } from './location.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
+import { ValidateObjectIdPipe } from './validate-object-id.pipe';
 
 @Controller('locations')
 export class LocationController {
@@ -28,13 +29,13 @@ export class LocationController {
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.locationService.findOne(id);
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
+    @Param('id', ValidateObjectIdPipe) id: string,
     @Body() updateLocationDto: UpdateLocationDto,
   ) {
     return this.locationService.update(id, updateLocationDto);
@@ -42,7 +43,7 @@ export class LocationController {
 
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
-  async delete(@Param('id') id: string) {
+  async delete(@Param('id', ValidateObjectIdPipe) id: string) {
     return this.locationService.delete(id);
   }
 }
