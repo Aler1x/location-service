@@ -30,9 +30,11 @@ export class LocationService {
   }
 
   async update(id: string, updateLocationDto: UpdateLocationDto) {
-    const existingLocation = await this.locationModel
-      .findByIdAndUpdate(id, updateLocationDto, { new: true })
-      .exec();
+    const existingLocation = await this.locationModel.findByIdAndUpdate(
+      id,
+      updateLocationDto,
+      { new: true },
+    );
     if (!existingLocation) {
       throw new Error(`Location #${id} not found`);
     }
