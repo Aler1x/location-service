@@ -25,6 +25,7 @@ export class OsmIntegrationService {
     lon: number,
     radius: number,
     objectType?: string[],
+    objectName?: string,
   ) {
     let query: string;
     // If no object type is specified, return all objects
@@ -32,14 +33,19 @@ export class OsmIntegrationService {
       query = `[out:json];node(around:${radius},${lat},${lon});out;`;
     }
 
-    query += `[out:json];(`;
+    query = `[out:json];(`;
     objectType.forEach((type) => {
       const osmType = this.object_types[type];
       if (!osmType) throw new Error(`Object type ${type} not supported`);
-      if (osmType === 'shop')
-        query += `node["${osmType}"](around:${radius},${lat},${lon});`;
-      else
-        query += `node["${osmType}"="${type}"](around:${radius},${lat},${lon});`;
+      if (osmType === 'shop') {
+        query += `node["${osmType}"]`;
+      } else {
+        query += `node["${osmType}"="${type}"]`;
+      }
+      if (objectName) {
+        query += `["name"="${objectName}"]`;
+      }
+      query += `(around:${radius},${lat},${lon});`;
     });
     query += `);out;`;
 
@@ -47,7 +53,7 @@ export class OsmIntegrationService {
       method: 'POST',
       body: query,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+        'Content-Type': 'application/json',
       },
     });
     const data = await response.json();
